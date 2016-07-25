@@ -29,4 +29,4 @@
 *.app
 /primordial-soup
 *.mp4
-/tmp/
+*~
