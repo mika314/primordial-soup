@@ -15,7 +15,7 @@ public:
   bool isCell(int x, int y);
   int getFoodValue(int x, int y);
   void tick();
-  void draw(std::vector<uint8_t> &rgb);
+  void draw(uint8_t *rgb, int pitch);
 private:
   uint16_t food[Height][Width];
   uint16_t cellIds[Height][Width];

@@ -199,9 +199,8 @@ void Soup::tick()
   }
 }
 
-void Soup::draw(std::vector<uint8_t> &rgb)
+void Soup::draw(uint8_t *rgb, int pitch)
 {
-  rgb.resize(Width * Height * 3);
   std::map<uint16_t, int> hist;
   for (int y = 0; y < Height; ++y)
     for (int x = 0; x < Width; ++x)
@@ -218,9 +217,9 @@ void Soup::draw(std::vector<uint8_t> &rgb)
   for (int y = 0; y < Height; ++y)
     for (int x = 0; x < Width; ++x)
     {
-      rgb[(y * Width + x) * 3] = 0;
-      rgb[(y * Width + x) * 3 + 1] = std::min(255, food[y][x] * 128 / KF);
-      rgb[(y * Width + x) * 3 + 2] = std::min(255, food[y][x] * 255 / KF);
+      rgb[y * pitch + x * 3] = 0;
+      rgb[y * pitch + x * 3 + 1] = std::min(255, food[y][x] * 128 / KF);
+      rgb[y * pitch + x * 3 + 2] = std::min(255, food[y][x] * 255 / KF);
     }
   const auto KE = 20000;
   for (auto &cell: cells)
@@ -229,8 +228,8 @@ void Soup::draw(std::vector<uint8_t> &rgb)
       continue;
     auto y = cell.getY();
     auto x = cell.getX();
-    rgb[(y * Width + x) * 3] = std::max(0, std::min(255, (KE - cell.getEnergy()) * 0x7f / KE));
-    rgb[(y * Width + x) * 3 + 1] = std::min(255, cell.getEnergy() * 0xff / KE);
-    rgb[(y * Width + x) * 3 + 2] = 0;
+    rgb[y * pitch + x * 3] = std::max(0, std::min(255, (KE - cell.getEnergy()) * 0x7f / KE));
+    rgb[y * pitch + x * 3 + 1] = std::min(255, cell.getEnergy() * 0xff / KE);
+    rgb[y * pitch + x * 3 + 2] = 0;
   }
 }

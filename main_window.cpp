@@ -1,14 +1,8 @@
 #include "main_window.hpp"
-#include <GL/gl.h>
 #include <iostream>
 
 MainWindow::MainWindow(bool yuvDump): Window(Width, Height), yuvDump(yuvDump)
 {
-  GLuint texture;
-  glGenTextures(1, &texture);
-  glBindTexture(GL_TEXTURE_2D, texture);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   if (yuvDump)
   {
     std::cout << "YUV4MPEG2 W" << Width << " H" << Height << " F" << 30 << ":1 Ip A0:0 C420jpeg XYSCSS=420JPEG\n";
@@ -16,11 +10,11 @@ MainWindow::MainWindow(bool yuvDump): Window(Width, Height), yuvDump(yuvDump)
 }
 
 
-void MainWindow::draw()
+void MainWindow::draw(uint8_t *pixels, int pitch)
 {
   for (int i = 0; i < 500; ++i)
     soup.tick();
-  soup.draw(rgb);
+  soup.draw(pixels, pitch);
   if (yuvDump)
   {
     yuv.resize(Width * Height * 3 / 2);
@@ -58,25 +52,5 @@ void MainWindow::draw()
     std::cout.write((const char *)yuv.data(), yuv.size());
   }
 
-  glLoadIdentity();
-  glOrtho(0, Width, Height, 0, -1, 1);
-  glEnable(GL_TEXTURE_2D);
-  glColor3f(1, 1, 1);
-  glTexImage2D(GL_TEXTURE_2D, 0, 3, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, rgb.data());
-  glBegin(GL_QUADS);
-
-  glTexCoord2f(0.0f, 0.0f);
-  glVertex2f(0, 0);
-
-  glTexCoord2f(1.0f, 0.0f);
-  glVertex2f(Width, 0);
-
-  glTexCoord2f(1.0f, 1.0f);
-  glVertex2f(Width, Height);
-
-  glTexCoord2f(0.0f, 1.0f);
-  glVertex2f(0, Height);
-  glEnd();
-  glDisable(GL_TEXTURE_2D);
   update();
 }
