@@ -27,3 +27,6 @@
 *.exe
 *.out
 *.app
+/primordial-soup
+*.mp4
+/tmp/
