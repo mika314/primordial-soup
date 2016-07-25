@@ -1,6 +1,7 @@
 #include "window.hpp"
-#include <stdexcept>
 #include <SDL.h>
+#include <stdexcept>
+#include <string>
 
 class PrivateWindow
 {

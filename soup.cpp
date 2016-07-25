@@ -1,6 +1,7 @@
 #include "soup.hpp"
 #include "asm.hpp"
 #include <map>
+#include <cstdlib>
 
 Soup::Soup()
 {
