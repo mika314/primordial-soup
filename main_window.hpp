@@ -9,10 +9,9 @@ class MainWindow: public Window
 {
 public:
   MainWindow(bool yuvDump = false);
-  void draw(uint8_t *pixels, int pitch) override;
+  bool draw(uint8_t *pixels, int pitch) override;
 private:
   Soup soup;
-  std::vector<uint8_t> rgb;
   std::vector<uint8_t> yuv;
   bool yuvDump;
 };

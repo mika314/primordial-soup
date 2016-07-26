@@ -55,8 +55,9 @@ void Window::update()
   SDL_PeepEvents(&event, 1, SDL_ADDEVENT, 0, 0);
 }
 
-void Window::draw(uint8_t *pixels, int pitch)
+bool Window::draw(uint8_t *pixels, int pitch)
 {
+  return true;
 }
 
 void Window::keyPressEvent(int)
@@ -106,7 +107,8 @@ int Window::exec()
                                   &pitch) != 0)
           throw std::runtime_error("SDL_LockTexture Error: " + std::string(SDL_GetError()));
 
-        draw(pixels, pitch);
+        if (!draw(pixels, pitch))
+          done = true;
 
         SDL_UnlockTexture(private_->texture);
 

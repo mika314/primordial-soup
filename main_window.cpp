@@ -10,15 +10,16 @@ MainWindow::MainWindow(bool yuvDump): Window(Width, Height), yuvDump(yuvDump)
 }
 
 
-void MainWindow::draw(uint8_t *pixels, int pitch)
+bool MainWindow::draw(uint8_t *pixels, int pitch)
 {
   for (int i = 0; i < 500; ++i)
-    soup.tick();
+    if (!soup.tick())
+      return false;
   soup.draw(pixels, pitch);
   if (yuvDump)
   {
     yuv.resize(Width * Height * 3 / 2);
-    auto RGB = std::begin(rgb);
+    auto RGB = pixels;
     auto Y = std::begin(yuv);
     auto U = std::begin(yuv) + Width * Height;
     auto V = std::begin(yuv) + Width * Height + Width / 2 * Height / 2;
@@ -53,4 +54,5 @@ void MainWindow::draw(uint8_t *pixels, int pitch)
   }
 
   update();
+  return true;
 }

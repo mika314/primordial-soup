@@ -14,7 +14,7 @@ public:
   bool newCell(int x, int y, int energy, const uint16_t *ram);
   bool isCell(int x, int y);
   int getFoodValue(int x, int y);
-  void tick();
+  bool tick();
   void draw(uint8_t *rgb, int pitch);
 private:
   uint16_t food[Height][Width];

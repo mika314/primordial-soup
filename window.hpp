@@ -16,7 +16,7 @@ public:
   int exec();
   void update();
 protected:
-  virtual void draw(uint8_t *pixels, int pitch);
+  virtual bool draw(uint8_t *pixels, int pitch);
   virtual void keyPressEvent(int key);
   virtual void keyReleaseEvent(int key);
 private:
