@@ -16,78 +16,78 @@ Soup::Soup()
   for (int i = 0; i < 20; ++i)
   {
     newCell(rand() % Width, rand() % Height, 0xffff, Program{
-        R[tmp] |= 6, // 0
-          R[energy] |= 0x3f,
-          R[energy] <<= R[tmp],
-          R[energy] |= 0x3f,
-          R[energy] <<= R[tmp],
-          R[energy] |= 0x3f, // Energy
-          R[food] = R[energy],
-          R[tmp] ^= R[tmp],
-          R[tmp] |= 5,
-          R[food] -= R[tmp], // Food
-          R[tmp] ^= R[tmp],
-          R[tmp] |= 2,
-          R[divide] = R[food], // 10
-          R[divide] -= R[tmp], // Devide
-          R[tmp] ^= R[tmp],
-          R[tmp] |= 1,
-          R[eat] = R[divide],
-          R[eat] -= R[tmp], // Eat
-          R[move] = R[eat],
-          R[move] -= R[tmp], // Move
-          R[threshold] = R[energy],
-          R[threshold] >>= R[tmp], 
-          R[threshold] >>= R[tmp], // Threshold
-          R[loop] = R[ip],
-          R[tmp2] = *R[energy],
-          R[tmp2] -= R[threshold],
-          R[tmp] ^= R[tmp],
-          R[tmp] |= 2,
-          R[tmp] += R[ip],
-          R[tmp2] < R[tmp],
-                    *R[divide] |= 0,
-                    R[tmp2] = *R[food],
-                    R[tmp] ^= R[tmp],
-                    R[tmp] |= 26,
-                    R[tmp] += R[ip],
-                    R[tmp2] != R[tmp], 
-                    // find max food
-                    R[max] = *R[food], // max = R[food];
-                    R[maxI] ^= R[maxI],
-                    R[idx] ^= R[idx], // for (i = 0; i < 4; ++i)
-                    R[idx] |= 3,
-                    R[loop2] = R[ip],
-                    //   if (R[food + i] > max)
-                    R[tmp2] = R[food],
-                    R[tmp2] += R[idx],
-                    R[tmp] ^= R[tmp],
-                    R[tmp] |= 1,
-                    R[tmp2] += R[tmp],
-                    R[tmp2] = *R[tmp2],
-                    R[tmp2] -= R[max],
-                    R[tmp] ^= R[tmp],
-                    R[tmp] |= 5,
-                    R[tmp] += R[ip],
-                    R[tmp2] < R[tmp],
-                              //   {
-                              //     max = R[food + i];
-                              R[tmp2] = R[food],
-                              R[tmp2] += R[idx],
-                              R[max] += *R[tmp2],
-                              //     maxI = i;
-                              R[maxI] = R[idx],
-                              //   }
-                              R[tmp] ^= R[tmp],
-                              R[tmp] |= 1,
-                              R[idx] -= R[tmp],
-                              R[idx] != R[loop2],
+        R[tmp] |= 6,
+        R[energy] |= 0x3f,
+        R[energy] <<= R[tmp],
+        R[energy] |= 0x3f,
+        R[energy] <<= R[tmp],
+        R[energy] |= 0x3f, // Energy
+        R[food] = R[energy],
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 5,
+        R[food] -= R[tmp], // Food
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 2,
+        R[divide] = R[food],
+        R[divide] -= R[tmp], // Devide
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 1,
+        R[eat] = R[divide],
+        R[eat] -= R[tmp], // Eat
+        R[move] = R[eat],
+        R[move] -= R[tmp], // Move
+        R[threshold] = R[energy],
+        R[threshold] >>= R[tmp], 
+        R[threshold] >>= R[tmp], // Threshold
+        R[loop] = R[ip],
+        R[tmp2] = *R[energy],
+        R[tmp2] -= R[threshold],
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 2,
+        R[tmp] += R[ip],
+        R[tmp2] < R[tmp],
+        *R[divide] |= 0,
+        R[tmp2] = *R[food],
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 26,
+        R[tmp] += R[ip],
+        R[tmp2] != R[tmp], 
+        // find max food
+        R[max] = *R[food], // max = R[food];
+        R[maxI] ^= R[maxI],
+        R[idx] ^= R[idx], // for (i = 0; i < 4; ++i)
+        R[idx] |= 3,
+        R[loop2] = R[ip],
+        //   if (R[food + i] > max)
+        R[tmp2] = R[food],
+        R[tmp2] += R[idx],
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 1,
+        R[tmp2] += R[tmp],
+        R[tmp2] = *R[tmp2],
+        R[tmp2] -= R[max],
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 5,
+        R[tmp] += R[ip],
+        R[tmp2] < R[tmp],
+        //   {
+        //     max = R[food + i];
+        R[tmp2] = R[food],
+        R[tmp2] += R[idx],
+        R[max] += *R[tmp2],
+        //     maxI = i;
+        R[maxI] = R[idx],
+        //   }
+        R[tmp] ^= R[tmp],
+        R[tmp] |= 1,
+        R[idx] -= R[tmp],
+        R[idx] != R[loop2],
 
-                              *R[move] = R[maxI],
+        *R[move] = R[maxI],
 
-                              *R[eat] |= 0,
-                              R[ip] = R[loop]
-                              }.data());
+        *R[eat] |= 0,
+        R[ip] = R[loop]
+      }.data());
   }
 }
 

@@ -83,8 +83,8 @@ std::string Cell::opCodeToString(uint16_t opCode)
 void Cell::tick()
 {
   if (rand() % 40000 == 0)
-    setRam(rand() % RamSize, rand() % 0x10000);
-  auto opCode = getRam(reg[0]++);
+    setRam(rand() % RamSize, rand() % 0x10000); // make cell mutate
+  auto opCode = getRam(reg[0]++); // reg[0] is IP (Instruction Pointer) register
   if (id == 0 && false)
   {
     std::clog << id << " " << opCodeToString(opCode);

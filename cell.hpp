@@ -33,16 +33,16 @@ public:
     Jlt,
   };
   enum {
-    MoveAddr = 0xfff6,
-    EatAddr = 0xfff7,
-    DivideAddr = 0xfff8,
-    IsCellAddr = 0xfff9,
-    UnderFoodAddr = 0xfffa,
-    LeftFoodAddr = 0xfffb,
-    RightFoodAddr = 0xfffc,
-    TopFoodAddr = 0xfffd,
-    BottomFoodAddr = 0xfffe,
-    EnergyAddr = 0xffff
+    MoveAddr       = 0xfff6, // writing to this address makes cell to move 0 - left, 1 - right, 2 - top, 3 - bottom 
+    EatAddr        = 0xfff7, // writing to this address makes cell to eat
+    DivideAddr     = 0xfff8, // writing to the memory with this addres will make the cell divide 0 - left, 1 - right, 2 - top, 3 - bottom
+    IsCellAddr     = 0xfff9, // reading from memory with this addres will return bit mask with information about cells arount 0 bit - left, 1st bit - right, 2nd bit - top, 3rd bit - bottom
+    UnderFoodAddr  = 0xfffa, // reading from memory with this addres will return amount of food UNDER the cell
+    LeftFoodAddr   = 0xfffb, // reading from memory with this addres will return amount of food on LEFT (WEST) side of the cell
+    RightFoodAddr  = 0xfffc, // reading from memory with this addres will return amount of food on RIGHT (EAST) side of the cell
+    TopFoodAddr    = 0xfffd, // reading from memory with this addres will return amount of food on TOP (NORTH) side of the cell
+    BottomFoodAddr = 0xfffe, // reading from memory with this addres will return amount of food on BOTTOM (SOUTH) side of the cell
+    EnergyAddr     = 0xffff, // reading from memory with this addres will return amount of energy the cell has
   };
 private:
   uint16_t id;
@@ -71,15 +71,4 @@ private:
                         [        ]-
                                    0 ip register
                                    1-31 register
-
- 0xfff6 - move writing to this address makes cell to move 0 - left, 1 - right, 2 - top, 3 - bottom 
- 0xfff7 - eat writing to this address makes cell to eat 10 
- 0xfff8 - divide 0 - left, 1 - right, 2 - top, 3 - bottom
- 0xfff9 - is cell 0 bit - left, 1st bit - right, 2nd bit - top, 3rd bit - bottom
- 0xfffa - food under
- 0xfffb - food on left
- 0xfffc - food on right
- 0xfffd - food on top
- 0xfffe - food on bottom
- 0xffff - energy
- */
+*/
