@@ -1,11 +1,12 @@
-TARGET=$(shell basename `pwd`)
+TARGET=$(shell basename $$(pwd))
 SOURCES=$(shell echo *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
+CXXFLAGS=-Wall -march=native -gdwarf-3 -std=c++1y -O3 -g $(shell sdl2-config --cflags)
+LDFLAGS=$(shell sdl2-config --libs)
 $(TARGET): $(OBJECTS)
-	g++ -pthread $(OBJECTS) `sdl2-config --libs` -o $(TARGET)
+	g++ $(OBJECTS) $(LDFLAGS) -o $(TARGET)
 %.o: %.cpp
-	g++ -Wall -march=native -gdwarf-3 -pthread -g -std=c++1y `sdl2-config --cflags` -c -O3 -MM $< > $@.mk~
-	g++ -Wall -march=native -gdwarf-3 -pthread -g -std=c++1y `sdl2-config --cflags` -c -O3 -o $@ $<
+	g++ $(CXXFLAGS) -c $< -MT $@ -MMD -MP -MF $*.mk~
 -include *.mk~
 clean:
 	rm -f *~
