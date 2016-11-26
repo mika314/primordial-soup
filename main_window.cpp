@@ -12,7 +12,8 @@ MainWindow::MainWindow(bool yuvDump): Window(Width, Height), yuvDump(yuvDump)
 
 bool MainWindow::draw(uint8_t *pixels, int pitch)
 {
-  for (int i = 0; i < 500; ++i)
+  auto t = SDL_GetTicks() + 1000 / 60;
+  while (SDL_GetTicks() < t)
     if (!soup.tick())
       return false;
   soup.draw(pixels, pitch);
@@ -53,6 +54,5 @@ bool MainWindow::draw(uint8_t *pixels, int pitch)
     std::cout.write((const char *)yuv.data(), yuv.size());
   }
 
-  update();
   return true;
 }

@@ -20,8 +20,6 @@ const int Window::KSpace = SDLK_SPACE;
 Window::Window(int width, int height):
   width_(width),
   height_(height),
-  needUpdate_(true),
-  lastUpdate_(0),
   private_(new PrivateWindow)
 {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -47,14 +45,6 @@ Window::~Window()
   SDL_Quit();
 }
 
-void Window::update()
-{
-  SDL_Event event;
-  event.type = SDL_WINDOWEVENT;
-  event.window.event = SDL_WINDOWEVENT_EXPOSED;
-  SDL_PeepEvents(&event, 1, SDL_ADDEVENT, 0, 0);
-}
-
 bool Window::draw(uint8_t *pixels, int pitch)
 {
   return true;
@@ -75,14 +65,13 @@ int Window::exec()
   while (!done)
   {
     SDL_Event e;
-    if (SDL_WaitEvent(&e))
+    if (SDL_PollEvent(&e))
     {
       switch (e.type)
       {
       case SDL_WINDOWEVENT:
         if (e.window.event == SDL_WINDOWEVENT_EXPOSED)
-          needUpdate_ = true;
-        break;
+          break;
       case SDL_KEYDOWN:
         keyPressEvent(e.key.keysym.sym);
         break;
@@ -94,32 +83,23 @@ int Window::exec()
         break;
       }
     }
-    const auto isEmpty = (SDL_PeepEvents(&e, 1, SDL_PEEKEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT) == 0);
-    if (isEmpty || SDL_GetTicks() > lastUpdate_ + 1000 / 60)
-    {
-      if (needUpdate_)
-      {
-        uint8_t *pixels;
-        int pitch;
-        if (SDL_LockTexture(private_->texture,
-                                  nullptr,
-                                  (void **)&pixels,
-                                  &pitch) != 0)
-          throw std::runtime_error("SDL_LockTexture Error: " + std::string(SDL_GetError()));
+    uint8_t *pixels;
+    int pitch;
+    if (SDL_LockTexture(private_->texture,
+                        nullptr,
+                        (void **)&pixels,
+                        &pitch) != 0)
+      throw std::runtime_error("SDL_LockTexture Error: " + std::string(SDL_GetError()));
 
-        if (!draw(pixels, pitch))
-          done = true;
+    if (!draw(pixels, pitch))
+      done = true;
 
-        SDL_UnlockTexture(private_->texture);
+    SDL_UnlockTexture(private_->texture);
 
-        if (SDL_RenderCopy(private_->renderer, private_->texture, nullptr, nullptr) != 0)
-          throw std::runtime_error("SDL_RenderCopy Error: " + std::string(SDL_GetError()));
+    if (SDL_RenderCopy(private_->renderer, private_->texture, nullptr, nullptr) != 0)
+      throw std::runtime_error("SDL_RenderCopy Error: " + std::string(SDL_GetError()));
 
-        SDL_RenderPresent(private_->renderer);
-        needUpdate_ = false;
-      }
-      lastUpdate_ = SDL_GetTicks();
-    }
+    SDL_RenderPresent(private_->renderer);
   }
   return 0;
 }

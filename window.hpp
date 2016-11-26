@@ -14,7 +14,6 @@ public:
   Window(int width = 800, int height = 600);
   ~Window();
   int exec();
-  void update();
 protected:
   virtual bool draw(uint8_t *pixels, int pitch);
   virtual void keyPressEvent(int key);
@@ -22,7 +21,5 @@ protected:
 private:
   int width_;
   int height_;
-  bool needUpdate_;
-  unsigned lastUpdate_;
   PrivateWindow *private_;
 };
