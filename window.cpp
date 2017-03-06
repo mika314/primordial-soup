@@ -45,7 +45,7 @@ Window::~Window()
   SDL_Quit();
 }
 
-bool Window::draw(uint8_t *pixels, int pitch)
+bool Window::draw(uint8_t */*pixels*/, int /*pitch*/)
 {
   return true;
 }
