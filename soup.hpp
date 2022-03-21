@@ -2,8 +2,8 @@
 #include "cell.hpp"
 #include "consts.hpp"
 #include <cstdint>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 class Soup
 {
@@ -16,7 +16,9 @@ public:
   int getFoodValue(int x, int y);
   bool tick();
   void draw(uint8_t *rgb, int pitch);
+
 private:
+  auto spawnCells() -> void;
   uint16_t food[Height][Width];
   uint16_t cellIds[Height][Width];
   std::vector<Cell> cells, newCells;

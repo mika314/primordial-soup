@@ -24,7 +24,7 @@ Window::Window(int width, int height):
 {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     throw std::runtime_error("SDL_Init Error: " + std::string(SDL_GetError()));
-  SDL_CreateWindowAndRenderer(width_, height_, SDL_WINDOW_OPENGL, &private_->window, &private_->renderer);
+  SDL_CreateWindowAndRenderer(width_, height_, SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS, &private_->window, &private_->renderer);
   SDL_RendererInfo rendererInfo;
   SDL_GetRendererInfo(private_->renderer, &rendererInfo);
   if ((rendererInfo.flags & SDL_RENDERER_ACCELERATED) == 0 || 

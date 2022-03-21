@@ -1,3 +1,3 @@
 #pragma once
 
-enum { Width = 1280, Height = 720 };
+enum { Width = 1920, Height = 1080 };
