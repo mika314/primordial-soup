@@ -10,7 +10,7 @@ Soup::Soup()
     for (int x = 0; x < Width; ++x)
     {
       cellIds[y][x] = 0xffff;
-      food[y][x] = 0xff;
+      food[y][x] = 0x0;
     }
   srand(time(nullptr));
   spawnCells();
@@ -181,7 +181,7 @@ int Soup::getFoodValue(int x, int y)
 
 bool Soup::tick()
 {
-  for (int i = 0; i < Height * Width / 10000; ++i)
+  for (int i = 0; i < Height * Width / 5000; ++i)
   {
     auto r = (rand() % (10 * Height / 2 - 200)) / 10. + 5;
     auto angl = 2 * 3.1415926 * (rand() % 10000) / 10000.;
