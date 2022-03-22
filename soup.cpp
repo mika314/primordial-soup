@@ -181,14 +181,16 @@ int Soup::getFoodValue(int x, int y)
 
 bool Soup::tick()
 {
-  for (int i = 0; i < Height * Width / 2000; ++i)
+  for (int i = 0; i < Height * Width / 20000; ++i)
   {
-    auto r = (rand() % (10 * Height / 2 - 200)) / 10. + 5;
-    auto angl = 2 * 3.1415926 * (rand() % 10000) / 10000.;
-    auto x = static_cast<int>(Width / 2 + r * cos(angl));
-    auto y = static_cast<int>(Height / 2 + r * sin(angl));
-    auto tmp = rand() % 30;
-    if (food[y][x] < 0x7fff - tmp)
+    const auto rnd = 1. * rand() / RAND_MAX;
+    const auto rndSq = 1. - (1. - rnd) * (1. - rnd);
+    const auto r = rndSq * (Height / 2 - 200) + 5;
+    const auto angl = 2 * 3.1415926 * (rand() % 10000) / 10000.;
+    const auto x = static_cast<int>(Width / 2 + r * cos(angl));
+    const auto y = static_cast<int>(Height / 2 + r * sin(angl));
+    const auto tmp = rand() % static_cast<int>(30 * (1 - rndSq) + 1);
+    if (food[y][x] < 0x2000 - tmp)
       food[y][x] += tmp;
   }
   int c = 0;
