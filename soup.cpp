@@ -181,7 +181,7 @@ int Soup::getFoodValue(int x, int y)
 
 bool Soup::tick()
 {
-  for (int i = 0; i < Height * Width / 5000; ++i)
+  for (int i = 0; i < Height * Width / 2000; ++i)
   {
     auto r = (rand() % (10 * Height / 2 - 200)) / 10. + 5;
     auto angl = 2 * 3.1415926 * (rand() % 10000) / 10000.;
