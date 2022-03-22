@@ -185,7 +185,7 @@ bool Soup::tick()
   {
     const auto rnd = 1. * rand() / RAND_MAX;
     const auto rndSq = 1. - (1. - rnd) * (1. - rnd);
-    const auto r = rndSq * (Height / 2 - 200) + 5;
+    const auto r = rndSq * (Height / 2 - 200);
     const auto angl = 2 * 3.1415926 * (rand() % 10000) / 10000.;
     const auto x = static_cast<int>(Width / 2 + r * cos(angl));
     const auto y = static_cast<int>(Height / 2 + r * sin(angl));
